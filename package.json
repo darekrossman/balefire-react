@@ -1,0 +1,53 @@
+{
+  "name": "playground",
+  "version": "0.0.1",
+  "description": "Example Flux architecture.",
+  "repository": "",
+  "main": "js/app.js",
+  "dependencies": {
+    "flummox": "^2.7.2",
+    "object-assign": "^2.0.0",
+    "react": "^0.12.2",
+    "react-router": "^0.12.0",
+    "react-router-component": "^0.23.3",
+    "react-tap-event-plugin": "^0.1.4",
+    "superagent": "^0.21.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.0.1",
+    "browserify": "^6.2.0",
+    "envify": "^3.0.0",
+    "es6ify": "^1.6.0",
+    "gulp": "^3.8.11",
+    "gulp-sass": "^1.3.3",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-util": "^3.0.3",
+    "jest-cli": "^0.2.2",
+    "react-tools": "^0.12.2",
+    "reactify": "^0.15.2",
+    "uglify-js": "~2.4.15",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.1.1"
+  },
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > js/bundle.min.js",
+    "test": "jest"
+  },
+  "author": "Darek Rossman",
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify",
+      "es6ify"
+    ]
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
+  }
+}
