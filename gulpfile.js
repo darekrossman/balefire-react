@@ -20,8 +20,9 @@ gulp.task('browsersync', ['bundle'], function(){
 
 gulp.task('bundle', function(){
   var bundler = browserify(watchify.args);
-  bundler.add('./js/app.js');
-  bundler.transform('babelify')
+  bundler.add('./node_modules/regenerator/runtime.js');
+  bundler.add('./js/app.js', {entry: true});
+  bundler.transform('babelify', {experimental: true, sourceMap: true})
   
   if (global.isWatching) {
     bundler = watchify(bundler);

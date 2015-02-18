@@ -1,13 +1,31 @@
-var React = require('react');
+import React            from 'react';
+import { RouteHandler } from 'react-router';
+import FluxComponent    from 'flummox/component';
+import Page             from './views/Page.react';
+import HeaderBar        from './views/HeaderBar.react';
 
-var BalefireApp = React.createClass({
+const BalefireApp = React.createClass({
 
-  render: function() {
+  contextTypes: {
+    flux: React.PropTypes.object.isRequired,
+  },
+
+  render() {
     return (
-      <div />
+      <FluxComponent flux={this.context.flux}>
+        <div>
+          <HeaderBar>
+            <h1 className="flex">Balefire</h1>
+          </HeaderBar>
+
+          <Page>
+            <RouteHandler />
+          </Page>
+        </div>
+      </FluxComponent>
     );
   }
 
-});
+})
 
-module.exports = BalefireApp;
+export default BalefireApp;

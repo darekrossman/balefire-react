@@ -270,4 +270,18 @@ body.fullbleed {
   border-radius: 5px 5px 5px 5px;
 }
 
-</style>
+/*******************************
+          Convenience
+*******************************/
+
+.layout-hc {
+  @extend .layout;  
+  @extend .horizontal;  
+  @extend .center;  
+}
+
+.layout-vc {
+  @extend .layout;  
+  @extend .horizontal;  
+  @extend .center;  
+}

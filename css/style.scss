@@ -1,0 +1,25 @@
+@import "layout";
+@import "type";
+
+* {box-sizing: border-box;}
+
+body {
+  background: #f6f6f6;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.HeaderBar {
+  @extend .layout-hc;
+  background: #333;
+  color: #FFF;
+  padding: 10px 10px;
+  height: 60px;
+}
+
+.Page {
+  padding: 40px;
+}
