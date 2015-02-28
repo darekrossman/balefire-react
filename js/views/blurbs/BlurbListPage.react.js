@@ -10,7 +10,7 @@ const BlurbListPage = React.createClass({
   statics: {
     async routerWillRun(state, flux) {
       let blurbActions = flux.getActions('blurb');
-      return blurbActions.getBlurbs();
+      return blurbActions.getAll();
     }
   },
 

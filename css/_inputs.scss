@@ -1,0 +1,33 @@
+input, textarea, [contenteditable] {
+  background: #FFF;
+  font-weight: 300;
+  margin: 0;
+  padding: 10px;
+  background: #FFF;
+  border: 1px solid $grey-300;
+
+  // box-shadow: inset 0px 1px 2px rgba($grey-500, 0.3);
+
+  &:focus {
+    outline: none;
+    border-color: $blue-100;
+    background: $blue-50;
+  }
+
+  &.invisible {
+    padding: 0;
+    border: 0;
+  }
+
+  &[readonly] {
+    background: $blue-grey-50;
+  }
+}
+
+.input-display {
+  display: block;
+  width: 100%;
+  font-size: 24px;
+  padding: 10px;
+}
+

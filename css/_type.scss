@@ -65,7 +65,7 @@ $black87: lighten(#000, 13);
   color: $black87;
   line-height: 24px;
 }
-.type-body-4 {
+.type--body-4 {
   font-size: 16px;
   font-weight: 300;
   color: $black87;
@@ -114,15 +114,17 @@ $black87: lighten(#000, 13);
   line-height: 120px;
 }
 
+
+
 .indent {
   margin-left: 45px;
 }
 
 a {
   text-decoration: none;
-  color: #000;
+  color: $cyan-800;
   &:hover, &:active {
-    color: #000;
+    color: $cyan-600;
   }
 }
 
@@ -133,6 +135,17 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin: 0;
+}
+
+.black {
+  color: $grey-900;
+}
+
+.error-text {
+  color: $red-500;
+}
+.success-text {
+  color: $light-green-500;
 }
 
 .semistrong {
@@ -149,4 +162,11 @@ p {
 }
 .reverse {
   color: #FFF;
+}
+
+
+
+
+::selection {
+  background: $blue-grey-100; 
 }

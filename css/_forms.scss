@@ -1,0 +1,36 @@
+// .fieldset {
+//   @extend .paper;
+//   padding: 1.5em 1.5em;
+//   margin-bottom: 0;
+
+//   > *:last-child {
+//     margin-bottom: 0;
+//   }
+
+//   &:last-child {
+//     margin-bottom: 2em;
+//   }
+
+//   &.slim {
+//     padding-right: 0.2em;
+//     &:last-of-type {
+//       margin-bottom: 1em;
+//     }
+//   }
+
+// }
+
+// .fieldset-row {
+//   padding-top: 0.25em;
+//   padding-bottom: 0.25em;
+//   margin-bottom: 2em;
+
+//   .slim & {
+//     margin-bottom: 0;
+//   }
+
+//   .paper-remove-btn {
+//     margin-left: 0.5em;
+//   }
+// }
+

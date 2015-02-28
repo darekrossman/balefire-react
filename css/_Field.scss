@@ -1,0 +1,73 @@
+.Field {
+  @extend .layout;
+  @extend .horizontal;
+  @extend .center;
+  @extend .flex;
+  margin-bottom: 1rem;
+
+  label {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    display: block;
+    margin-right: 8px;
+    padding-top: 1px;
+    width: 80px;
+    text-align: right;
+    color: $blue-grey-300;
+
+    &.flex {
+      padding: 0;
+      // text-align: left;
+      // margin-left: 88px;
+    }
+  }
+
+  &.iconlabel {
+    .mui-font-icon {
+      color: $blue-grey-300;
+      font-size: 17px;
+      margin-right: 1em;
+    }
+  }
+
+  input, textarea {
+    font-size: 14px;
+    line-height: 18px;
+    padding: 8px;
+    font-weight: 400;
+    display: block;
+    // border-top: 0;
+    // border-left: 0;
+    // border-right: 0;
+    resize: none;
+  }
+
+
+
+  > input:last-child,
+    textarea:last-child {
+    @extend .flex;
+  }
+
+  .slim .fieldset-row & {
+    margin-bottom: 0;
+    margin-right: 1em;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    label {
+      width: auto;
+    }
+  }
+
+  .fieldtoggle {
+
+
+    .mui-toggle {
+      padding-top: 2px;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.DataTable {
+  @extend .paper;
+  width: 100%;
+}
+
+.DataTable__row { 
+  border-bottom: 1px solid $blue-grey-100;
+  &:last-child {
+    border-bottom: none;
+  }
+  width: 100%;
+  padding: 0 20px;
+}
+
+.DataTable__cell {
+  padding: 8px 10px;
+  min-height: 32px;
+}
+

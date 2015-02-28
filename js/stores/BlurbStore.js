@@ -1,34 +1,52 @@
 import { Store } from 'flummox';
+import CrudStore from '../lib/CrudStore';
+import assign from 'object-assign'    
 
-class BlurbStore extends Store {
-
+class BlurbStore extends CrudStore {
+  
   constructor(flux) {
-    super(); // Don't forget this step
+    super(flux, {
+      crudActionListeners: ['blurb']
+    }); 
 
-    let blurbActionIds = flux.getActionIds('blurb');
-    this.register(blurbActionIds.getBlurbs, this.receiveBlurbs)
-   
     this.state = {
-      blurbs: {}
+      blurbs: {},
+      blurb: {}
     };
   }
+  
+  onGet(response) {
+    let _state = {};
 
-  receiveBlurbs(blurbs) {
-    let _blurbs = {};
-
-    if (!blurbs.forEach) {
+    if (!response.forEach) {
       // got back a single blurb as an object
-      _blurbs[blurbs.id] = blurbs;
+      _state.blurb = response;
     } else {  
       // got back a collection of blurbs
-      blurbs.forEach((blurb, i) => {
-        _blurbs[blurb.id] = blurb;
+      _state.blurbs = {};
+      response.forEach((blurb, i) => {  
+        _state.blurbs[blurb.id] = blurb;
       });
     }
 
+    this.setState(_state);
+  }
+
+  onCreate() {
     this.setState({
-      blurbs: _blurbs
+      blurb: {}
     })
+  }
+
+  onUpdate(entity) {
+    delete entity.id;
+    this.setState({
+      blurb: assign({}, this.state.blurb, entity)
+    })
+  }
+
+  onSave(res) {
+    console.log('Store was notified that a blurb was saved', res)
   }
 
 }

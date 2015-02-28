@@ -1,21 +1,32 @@
-import { Actions } from 'flummox';
-import request from '../utils/request';
+import { Actions }  from 'flummox';
+import CrudActions  from '../lib/CrudActions';
+import request      from '../utils/request';
+import assign       from 'object-assign';
+import APIUtils     from '../utils/WebAPIUtils';
 
 class BlurbActions extends Actions {
-
-  constructor() {
-    super()
-    this.blurbAPIRoot = 'http://www.valpak.com/pub/vp/blurbs';
+ 
+  constructor() { 
+    super();
   }
 
-  async getBlurbs(opts = {}) {
-    let url = !opts.id ? this.blurbAPIRoot : `${this.blurbAPIRoot}/${opts.id}`;
-    let response = await request.get(url).exec();
-    return response.body;
+  create() { 
+    return {};
+  } 
+
+  async save(entity) {
+    return APIUtils.send('/blurbs', entity);
+  }
+
+  async getAll(params) {
+    let {body} = await APIUtils.get('/blurbs', params);
+    return body;
+  }
+
+  update(entity = {}) {
+    return entity;
   }
 
 }
-
-
 
 export default BlurbActions;

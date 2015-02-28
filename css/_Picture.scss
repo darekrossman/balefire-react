@@ -1,0 +1,25 @@
+.Picture {
+  transition: all 0.5s;
+  opacity: 1;
+    
+  &:after {
+    transition: opacity 0.5s 1s;
+    font-size: 11px; 
+    text-align: center;
+    display: block;
+    color: $light-green-500; 
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    content: 'Success!';
+    opacity: 0;
+  }
+
+  &.waiting {
+    opacity: 0.7;
+    &:after {
+      color: $pink-500;
+      opacity: 1;
+      content: 'Uploading...'
+    }
+  }
+}

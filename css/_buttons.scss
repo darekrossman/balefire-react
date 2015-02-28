@@ -1,0 +1,73 @@
+button {
+
+  > div:first-child {
+    @extend .layout-hc;
+    @extend .center-justified;
+  }
+
+  &.primary {
+    color: $light-green-500;
+  }
+
+  &.small {
+    font-size: 13px;
+    line-height: 24px;
+    min-width: 0;
+    padding: 0 8px;
+
+    .mui-font-icon {
+
+      margin: 0 6px 0 0;
+      line-height: inherit;
+    }
+    .mui-flat-button-label {
+
+    }
+  }
+
+
+  .mui-font-icon {
+    margin: 0 6px 0 0;
+    line-height: inherit;
+  }
+
+}
+
+.mui-enhanced-button {
+  &.block {
+    display: block;
+    width: 100%;
+  }
+
+  .mui-raised-button-label,
+  .mui-flat-button-label {
+    font-weight: 300;
+    letter-spacing: 0.08em;
+  }
+
+  &.mui-raised-button-container {
+    padding: 0 16px;
+    .mui-font-icon {
+      & + .mui-raised-button-label {
+        margin-left: 0.75em;
+        padding: 0;
+      }
+    }
+  }
+}
+
+
+.mui-floating-action-button { 
+  &.sticky-bottom {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+  }
+
+  &.fieldset-add {
+    position: absolute;
+    top: 12px;
+    right: -20px; 
+  }
+}
+
