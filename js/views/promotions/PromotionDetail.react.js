@@ -12,6 +12,7 @@ import BlogLinksList            from './BlogLinksList.react';
 import SocialMetaFieldSet       from './SocialMetaFieldSet.react';
 import PageMetaFieldSet         from './PageMetaFieldSet.react';
 import PromoDetailsFieldSet     from './PromoDetailsFieldSet.react';
+import AdditionalContentFieldSet from './AdditionalContentFieldSet.react';
 import ImageFieldSet            from './ImageFieldSet.react';
 
 import FileInputButton  from '../shared/FileInputButton.react';
@@ -54,6 +55,8 @@ const PromotionDetail = React.createClass({
             <SocialMetaFieldSet 
               item={promo.get('socialMeta')}
               onChange={this.updateFieldValues}
+              onBlur={this.autofillSocialURLField}
+              omniPageName={promo.getIn(['pageMeta', 'omniPageName'])}
             />
           </div>
 
@@ -143,6 +146,16 @@ const PromotionDetail = React.createClass({
           </div>
 
 
+          {/* Additional Content */}
+          <div className="paper-box">
+            <h5 className="paper-box__heading">Additional Content</h5>
+            <AdditionalContentFieldSet
+              promo={promo}
+              onChange={this.updateFieldValues}
+            />
+          </div> 
+
+
         </section>
 
         <aside>
@@ -210,6 +223,25 @@ const PromotionDetail = React.createClass({
   removeFeaturedImage(e, payload) {
     this.actions('promotion').removeFeaturedImage(payload.index)
   },
+
+  // when leaving certain social fields, we might want
+  // to auto populate associated inputs, like share URLs w/ VPREFs
+  autofillSocialURLField(e, payload) {
+    switch(payload.name) {
+      case 'twitterDescription':
+        // check autopopulation
+        break;
+      case 'pinterestDescription':
+        // check autopopulation
+        break;
+      case 'googleDescription':
+        // check autopopulation
+        break;
+      case 'emailDescription':
+        // check autopopulation
+        break;
+    }
+  }
 
 });
 

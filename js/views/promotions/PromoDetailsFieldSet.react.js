@@ -17,7 +17,6 @@ const PromoDetailsFieldSet = React.createClass({
   },
 
   render: function() {
-    console.info('Rendering PromoDetailsFieldSet');
     return (
       
       <FieldSet 
@@ -30,7 +29,10 @@ const PromoDetailsFieldSet = React.createClass({
           },
           {
             name: 'description',
-            label: 'Description'
+            label: 'Description',
+            type: 'textarea',
+            rows: 3,
+            autogrow: true
           },
           {
             name: 'startDate',

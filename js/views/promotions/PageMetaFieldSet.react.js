@@ -6,8 +6,6 @@ const PageMetaFieldSet = React.createClass({
   mixins: [ React.addons.PureRenderMixin ],
 
   render: function() {
-    console.info('Rendering PageMetaFieldSet');
-
     return (
       <FieldSet 
         fieldsFor="pageMeta"

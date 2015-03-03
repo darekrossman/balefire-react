@@ -5,6 +5,9 @@
   "repository": "",
   "main": "js/app.js",
   "dependencies": {
+    "aws-sdk": "^2.1.14",
+    "babel": "^4.6.3",
+    "co-multipart": "^0.2.0",
     "flummox": "^2.7.2",
     "immutable": "^3.6.2",
     "koa": "~0.16.0",
@@ -16,7 +19,7 @@
     "koa-router": "~3.8.0",
     "koa-static": "~1.4.9",
     "koa-views": "~2.1.2",
-    "material-ui": "^0.7.0",
+    "material-ui": "file:../../../../../var/folders/_3/j0gbvw4j4wn879xhd0jsmp4r0000gn/T/npm-59779-64bb9220/git-cache-59807c5f0293/d30b10a57c3659b56abb5356006bf772b343d486",
     "material-ui-sass": "^0.5.3",
     "node-jsx": "^0.12.4",
     "object-assign": "^2.0.0",
@@ -25,6 +28,7 @@
     "react-router": "^0.12.0",
     "react-tap-event-plugin": "^0.1.4",
     "regenerator": "^0.8.11",
+    "s3-upload-stream": "^1.0.7",
     "superagent": "^0.21.0",
     "then-jade": "~2.2.1"
   },

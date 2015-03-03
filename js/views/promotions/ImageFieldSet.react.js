@@ -10,10 +10,10 @@ const ImageFieldSet = React.createClass({
   // this.props.fieldSet  The fields to be inserted into the final output
 
   render() {
-    let {dataURI, imgPath} = this.props.item; 
+    let {dataURI, imgPath, isUploaded} = this.props.item; 
 
     let classes = React.addons.classSet({
-      'waiting': !this.props.item.isUploaded
+      'waiting': typeof isUploaded !== 'undefined' && !isUploaded
     })
 
     return (

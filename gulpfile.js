@@ -11,7 +11,7 @@ var babelify = require('babelify');
 
 gulp.task('browsersync', ['bundle'], function(){
   return browserSync({
-    server: {baseDir: './'},
+    proxy: 'http://localhost:3333/balefire',
     files: ['**/dist/bundle.js', '**/*.css', '**/*.html']
   })  
 })
@@ -62,7 +62,7 @@ gulp.task('set-watching', function(){
 })
 
 
-gulp.task('watch', ['set-watching', 'bundle', 'browsersync'], function(){
+gulp.task('watch', ['set-watching', 'bundle', 'sass', 'browsersync'], function(){
   gulp.watch('css/**/*.scss', ['sass']);
 }); 
 

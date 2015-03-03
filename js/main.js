@@ -38,6 +38,8 @@ Router.run(routes, Router.HistoryLocation, function (Handler, state) {
       { flux },
       () => React.render(<Handler />, document.getElementById('app'))
     );
+
+    // console.log(document.getElementById('app').innerHTML);
   }
   run().catch(error => {
     throw error;

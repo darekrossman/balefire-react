@@ -87,7 +87,7 @@ class PromotionStore extends CrudStore {
       promotion: this.state.promotion.setIn(updatePath, payload.value)
     })
   }
-
+   
   onUpdate(payload) {
     let index = payload.entity['__index__'];
     let entity = Immutable.fromJS(payload.entity);

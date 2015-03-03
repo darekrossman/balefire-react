@@ -104,7 +104,7 @@ class PromotionActions extends Actions {
 
 
     let res = await request
-      .post('http://localhost:3333/api/upload')
+      .post('/balefire/api/upload')
       .attach('images[]', image, image.fileName)
       .exec()
       .catch(error => {

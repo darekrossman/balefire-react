@@ -9,6 +9,7 @@ var FieldSet = React.createClass({
     'fieldsFor': React.PropTypes.string,
     'item': React.PropTypes.object.isRequired,
     'onChange': React.PropTypes.func.isRequired,
+    'onBlur': React.PropTypes.func,
     'fields': React.PropTypes.array.isRequired,
     'index': React.PropTypes.number
   },
@@ -21,9 +22,10 @@ var FieldSet = React.createClass({
         <Field 
           key={i}
           type={field.type || 'text'}
-          rows={field.rows || 0}
           name={field.name}
           value={this.props.item[field.name]}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
           onChange={this.handleInputChange}
           readOnly={field.readOnly}
           label={field.label}
@@ -53,9 +55,35 @@ var FieldSet = React.createClass({
 
   handleInputChange(e, payload) {
     payload.fieldsFor = this.props.fieldsFor;
-    payload.index = this.props.index,
+    payload.index = this.props.index;
 
     this.props.onChange(e, payload);
+  },
+
+  handleBlur() {
+
+  },
+
+  handleFocus(e, payload) {
+    payload.fieldsFor = this.props.fieldsFor;
+    payload.index = this.props.index;
+
+    let index;
+    let name = e.target.name;
+    let field = this.props.fields.reduce((a, b, i) => {
+      if (name === a.name) {
+        index = index || i;
+        return a;
+      }
+      return b;
+    });
+
+    if (typeof field.onFocus === 'function') {
+      
+      field.onFocus(e, payload)
+
+    } else if (this.props.onFocus)
+      this.props.onFocus(e, payload);
   }
 
 });

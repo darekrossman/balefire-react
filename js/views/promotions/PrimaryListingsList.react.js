@@ -1,6 +1,5 @@
 import React from 'react/addons'
 import List from '../shared/List.react';
-import { FlatButton, IconButton, FontIcon, DropDownMenu, FloatingActionButton } from 'material-ui';
 
 const PrimaryListingsFieldSet = React.createClass({
 
