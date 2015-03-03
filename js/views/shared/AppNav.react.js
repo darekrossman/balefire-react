@@ -17,7 +17,7 @@ const AppNav = React.createClass({
   componentWillUpdate(nextProps, nextState) {
     if (!nextState.active) {
       
-    }
+    } 
   },
 
   render() {
@@ -36,9 +36,7 @@ const AppNav = React.createClass({
             <h1 className="header-title">Balefire</h1>
           </HeaderBar>
           <ul onTouchTap={this.toggle}>
-            <li><Link to="blurbs">Blurbs</Link></li>
-            <li><Link to="merchants">Merchants</Link></li>
-            <li><Link to="promotions">Promotions</Link></li>
+            {this.props.children}
           </ul>
         </nav>
       </div>

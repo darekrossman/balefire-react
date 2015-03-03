@@ -25,6 +25,7 @@ module.exports = function(app) {
      */
     yield resolveComponent(state.routes, 'routerWillRun', state, flux);
 
+
     /**
      * Add flux instance to context so deeply-nested views can easily access it.
      */

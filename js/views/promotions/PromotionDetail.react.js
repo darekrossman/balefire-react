@@ -1,6 +1,5 @@
 import React                    from 'react';
 import { State, Navigation }    from 'react-router';
-import { FlatButton, FloatingActionButton }           from 'material-ui';
 import ActionsMixin             from '../mixins/ActionsMixin';
 import NotifyMixin              from '../mixins/NotifyMixin';
 import List                     from '../shared/List.react';
@@ -14,8 +13,13 @@ import PageMetaFieldSet         from './PageMetaFieldSet.react';
 import PromoDetailsFieldSet     from './PromoDetailsFieldSet.react';
 import AdditionalContentFieldSet from './AdditionalContentFieldSet.react';
 import ImageFieldSet            from './ImageFieldSet.react';
-
 import FileInputButton  from '../shared/FileInputButton.react';
+import {
+  FlatButton, 
+  FloatingActionButton,
+  Tabs,
+  Tab 
+} from 'material-ui';
 
 const PromotionDetail = React.createClass({
 
@@ -30,130 +34,142 @@ const PromotionDetail = React.createClass({
         
         <section> 
 
-          {/* Promo Details */}
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Promo Details</h5>
-            <PromoDetailsFieldSet
-              promo={promo}
-              onChange={this.updateFieldValues}
-            />
-          </div>  
- 
+          <Tabs>
+            <Tab label="Details">
+              {/* Promo Details */}
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Promo Details</h5>
+                <PromoDetailsFieldSet
+                  promo={promo}
+                  onChange={this.updateFieldValues}
+                />
+              </div>  
+            </Tab>
+            
+            <Tab label="Meta Info">
 
-          {/* Page Meta Info */}  
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Page Meta Info</h5>
-            <PageMetaFieldSet 
-              item={promo.get('pageMeta')}
-              onChange={this.updateFieldValues}
-            />
-          </div>
+              {/* Page Meta Info */}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Page Meta Info</h5>
+                <PageMetaFieldSet 
+                  item={promo.get('pageMeta')}
+                  onChange={this.updateFieldValues}
+                />
+              </div>
 
-          {/* Social Meta Info */}  
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Social Meta Info</h5>
-            <SocialMetaFieldSet 
-              item={promo.get('socialMeta')}
-              onChange={this.updateFieldValues}
-              onBlur={this.autofillSocialURLField}
-              omniPageName={promo.getIn(['pageMeta', 'omniPageName'])}
-            />
-          </div>
+              {/* Social Meta Info */}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Social Meta Info</h5>
+                <SocialMetaFieldSet 
+                  item={promo.get('socialMeta')}
+                  onChange={this.updateFieldValues}
+                  onBlur={this.autofillSocialURLField}
+                  omniPageName={promo.getIn(['pageMeta', 'omniPageName'])}
+                />
+              </div>
 
-          {/* Primary Listings*/}  
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Primary Listings</h5>
-            <PrimaryListingsList 
-              items={promo.get('primaryMerchantListings')}
-              onChange={this.updateFieldValues}
-              onAdd={this.addPrimaryListing}
-              onRemove={this.removePrimaryListing}
-            />
-          </div>
+            </Tab>
 
-          {/* Category Listings */}   
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Category Listings</h5>
-            <div className="FieldSet">
-              <Field 
-                rows={2}
-                type="textarea"
-                name="affiliateCategories"
-                label="Affiliate Category IDs"
-                value={promo.get('affiliateCategories')}
-                onChange={this.updateFieldValues}
-              />
-            </div>
-          </div>
+            <Tab label="Listings">
+              {/* Primary Listings*/}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Primary Listings</h5>
+                <PrimaryListingsList 
+                  items={promo.get('primaryMerchantListings')}
+                  onChange={this.updateFieldValues}
+                  onAdd={this.addPrimaryListing}
+                  onRemove={this.removePrimaryListing}
+                />
+              </div>
 
-          {/* Blog Links */}  
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Blog Links</h5>
-            <BlogLinksList
-              items={promo.get('blogLinks').toJS()}
-              onChange={this.updateFieldValues}
-              onAdd={this.addBlogPost}
-              onRemove={this.removeBlogPost}
-            />
-          </div>
+              {/* Category Listings */}   
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Category Listings</h5>
+                <div className="FieldSet">
+                  <Field 
+                    rows={2}
+                    type="textarea"
+                    name="affiliateCategories"
+                    label="Affiliate Category IDs"
+                    value={promo.get('affiliateCategories')}
+                    onChange={this.updateFieldValues}
+                  />
+                </div>
+              </div>
+            </Tab>
 
-          {/* Featured Images */}  
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Featured Images</h5>
-            <List
-              className="featuredImages-list"
-              fieldsFor="featuredImages"
-              items={promo.get('featuredImages').toJS()}
-              onChange={this.updateFieldValues}
-              onRemove={this.removeFeaturedImage}
-              placeholder="No Images!? You should add some."
-              addButton={<FileInputButton label="Upload Image" onChange={this.handleFilesSelected}/>}
-              fieldsContainer={<ImageFieldSet />}
-              fields={[
-                {
-                  name: 'fileName',
-                  label: 'Filename',
-                  readOnly: true
-                },
-                {
-                  name: 'imgPath',
-                  label: 'ImageURL',
-                  readOnly: true
-                },
-                {
-                  name: 'startDate',
-                  label: 'Start Date'
-                },
-                {
-                  name: 'endDate',
-                  label: 'End Date'
-                },
-                {
-                  name: 'altText',
-                  label: 'Alt Text'
-                },
-                {
-                  name: 'linkURL',
-                  label: 'Link URL'
-                },
-                {
-                  name: 'newWindow',
-                  label: 'Open link in new window',
-                  type: 'toggle'
-                }
-              ]}
-            />
-          </div>
+            <Tab label="Features">
+              {/* Featured Images */}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Featured Images</h5>
+                <List
+                  className="featuredImages-list"
+                  fieldsFor="featuredImages"
+                  items={promo.get('featuredImages').toJS()}
+                  onChange={this.updateFieldValues}
+                  onRemove={this.removeFeaturedImage}
+                  placeholder="No Images!? You should add some."
+                  addButton={<FileInputButton label="Upload Image" onChange={this.handleFilesSelected}/>}
+                  fieldsContainer={<ImageFieldSet />}
+                  fields={[
+                    {
+                      name: 'fileName',
+                      label: 'Filename',
+                      readOnly: true
+                    },
+                    {
+                      name: 'imgPath',
+                      label: 'ImageURL',
+                      readOnly: true
+                    },
+                    {
+                      name: 'startDate',
+                      label: 'Start Date'
+                    },
+                    {
+                      name: 'endDate',
+                      label: 'End Date'
+                    },
+                    {
+                      name: 'altText',
+                      label: 'Alt Text'
+                    },
+                    {
+                      name: 'linkURL',
+                      label: 'Link URL'
+                    },
+                    {
+                      name: 'newWindow',
+                      label: 'Open link in new window',
+                      type: 'toggle'
+                    }
+                  ]}
+                />
+              </div>
 
+              {/* Blog Links */}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Blog Links</h5>
+                <BlogLinksList
+                  items={promo.get('blogLinks').toJS()}
+                  onChange={this.updateFieldValues}
+                  onAdd={this.addBlogPost}
+                  onRemove={this.removeBlogPost}
+                />
+              </div>
+            </Tab>
 
-          {/* Additional Content */}
-          <div className="paper-box">
-            <h5 className="paper-box__heading">Additional Content</h5>
-            <AdditionalContentFieldSet
-              promo={promo}
-              onChange={this.updateFieldValues}
-            />
-          </div> 
+            <Tab label="Misc">
+              {/* Additional Content */}
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Additional Content</h5>
+                <AdditionalContentFieldSet
+                  promo={promo}
+                  onChange={this.updateFieldValues}
+                />
+              </div> 
+            </Tab>
+          </Tabs>
 
 
         </section>

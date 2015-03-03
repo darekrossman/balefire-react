@@ -1,5 +1,5 @@
 import React                    from 'react';
-import { RouteHandler, State }  from 'react-router';
+import { RouteHandler, State, Link }  from 'react-router';
 import FluxComponent            from 'flummox/component';
 
 import Page             from './shared/Page.react';
@@ -55,7 +55,11 @@ const BalefireApp = React.createClass({
     return (
 
       <div className="AppLayout">
-        <AppNav ref="AppNav"/>
+        <AppNav ref="AppNav">
+          <li><Link to="blurbs">Blurbs</Link></li>
+          <li><Link to="merchants">Merchants</Link></li>
+          <li><Link to="promotions">Promotions</Link></li>
+        </AppNav>
 
         <div className="flex">
           <HeaderBar raised={this.state.pageScrolled}>
