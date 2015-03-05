@@ -29,6 +29,7 @@ var FieldSet = React.createClass({
           onChange={this.handleInputChange}
           readOnly={field.readOnly}
           label={field.label}
+          rows={this.props.rows}
         />
       );
     });

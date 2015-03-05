@@ -29,7 +29,7 @@ const AdditionalContentFieldSet = React.createClass({
             label: 'SEO Content',
             type: 'textarea',
             rows: 5
-          },
+          }
         ]}
       />
       

@@ -11,9 +11,6 @@ Request.prototype.exec = function() {
       if (error) {
         reject(error)
       }
-      else if (res.status !== 200 && res.status !== 201) {
-        reject(res.body ? res.body : res.error)
-      }
       else 
         resolve(res)
     });

@@ -15,21 +15,32 @@ module.exports = function(app) {
      */
     var flux = new Flux();
 
+    var appString, title, router;
+
 
     var {Handler,state} = yield new Promise((resolve, reject) => {
-      Router.run(routes, this.url, (Handler, state) => resolve({ Handler, state }));
+      router = Router.create({
+        routes: routes,
+        location: this.url
+      });
+      router.run((Handler, state) => resolve({ Handler, state }))
     });
+
+    
 
     /**
      *  Wait for stores to fetch data before continuing. 
      */
-    yield resolveComponent(state.routes, 'routerWillRun', state, flux);
-
+    try {
+      yield resolveComponent(state.routes, 'routerWillRun', state, flux);
+    } catch(err) {
+      Handler = require('../../js/views/shared/NotFound.react')
+    }
 
     /**
      * Add flux instance to context so deeply-nested views can easily access it.
      */
-    var appString = React.withContext(
+    appString = React.withContext(
       { flux },
       () => React.renderToString(<Handler />)
     );
@@ -37,7 +48,7 @@ module.exports = function(app) {
     /**
      * Extracts a title from the React component tree
      */
-    var title = DocumentTitle.rewind();
+    title = DocumentTitle.rewind();
 
     /**
      * Pass the initial render of the app to a Jade template
@@ -47,5 +58,6 @@ module.exports = function(app) {
       appString,
       env: process.env,
     });
+
   });
 }

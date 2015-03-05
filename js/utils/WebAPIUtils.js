@@ -17,7 +17,15 @@ let WebAPIUtils = {
 
   async get(path, params = {}) {
     let url = apiRoot + path + (params.id ? `/${params.id}`:'');
-    return request.get(url).exec();
+    let req = request.get(url).exec();
+    return req;
+  },
+
+  async remove(path, params = {}) {
+    
+    let url = apiRoot + path + (params.id ? `/${params.id}`:'');
+    let req = request.del(url).exec();
+    return req;
   }
 
 };

@@ -1,5 +1,5 @@
 var React      = require('react');
-var { Route }  = require('react-router');
+var { Route, NotFoundRoute }  = require('react-router');
 
 // Route Views
 var App                  = require('./views/App.react');
@@ -9,6 +9,7 @@ var MerchantListPage     = require('./views/merchants/MerchantListPage.react');
 var MerchantDetailPage   = require('./views/merchants/MerchantDetailPage.react');
 var PromotionListPage    = require('./views/promotions/PromotionListPage.react');
 var PromotionDetailPage  = require('./views/promotions/PromotionDetailPage.react');
+var NotFound             = require('./views/shared/NotFound.react'); 
 
 var routes = (
   <Route path="/balefire/" handler={App}>
@@ -22,7 +23,11 @@ var routes = (
     
     <Route name="promotions" path="promotions" handler={PromotionListPage}/>
     <Route name="promotions.create" path="promotions/create" handler={PromotionDetailPage}/>
-    <Route name="promotions.detail" path="promotions/:id" handler={PromotionDetailPage}/>
+    <Route name="promotions.detail" path="promotions/:id" handler={PromotionDetailPage}>
+      <NotFoundRoute handler={NotFound} />
+    </Route>
+
+    <NotFoundRoute handler={NotFound} />
   </Route>
 );
 

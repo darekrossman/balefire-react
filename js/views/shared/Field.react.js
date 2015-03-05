@@ -13,12 +13,7 @@ const Field = React.createClass({
     label: React.PropTypes.string,
     readOnly: React.PropTypes.bool,
     type: React.PropTypes.oneOf(['text', 'textarea', 'toggle']),
-  },
-
-  getInitialState: function() {
-    return {
-      autorows: 2 
-    }
+    rows: React.PropTypes.number
   },
 
   getDefaultProps: function() {
@@ -32,6 +27,17 @@ const Field = React.createClass({
 
   render() {
     let el;
+
+    let {
+      name,
+      value,
+      readOnly,
+      onFocus,
+      onBlur,
+      onChange,
+      className,
+      ...other
+    } = this.props;
 
     switch(this.props.type) {
       case 'text':
@@ -47,7 +53,7 @@ const Field = React.createClass({
       case 'textarea':
         el = <textarea 
               ref="textarea"
-              rows={this.state.autorows}
+              rows={this.props.rows}
               name={this.props.name}
               value={this.props.value}
               onChange={this.inputChange}
@@ -68,8 +74,10 @@ const Field = React.createClass({
         )
     }
 
+    let classes = 'Field ' + this.props.className;
+
     return (
-      <div className="Field">
+      <div className={classes} {...other}>
         <label htmlFor={this.props.name}>{this.props.label}</label>
         {el}
       </div>
@@ -77,7 +85,7 @@ const Field = React.createClass({
   },
 
   inputChange(e) {
-    this.calcRows();
+    // this.calcRows();
     this.props.onChange(e, this.getPayload(e));
   },
 
@@ -86,7 +94,7 @@ const Field = React.createClass({
   },
 
   inputFocus(e) {
-    this.calcRows();
+    // this.calcRows();
     this.props.onFocus(e, this.getPayload(e));
   },
 
@@ -106,21 +114,6 @@ const Field = React.createClass({
       'name': name,
       'value': value, 
       'item': detail
-    }
-  },
-
-  calcRows() {
-    if (this.isMounted() && this.props.type === 'textarea') {
-      let autorows;
-      let scrollHeight = this.refs.textarea.getDOMNode().scrollHeight;
-      let clientHeight = this.refs.textarea.getDOMNode().clientHeight;
-      if (scrollHeight <= clientHeight) return;
-      autorows = Math.ceil(scrollHeight / 24); 
-      if (autorows !== this.state.autorows) {
-        this.setState({
-          autorows: autorows
-        })
-      }
     }
   }
 

@@ -1,5 +1,6 @@
 import React                    from 'react';
 import { State, Navigation }    from 'react-router';
+import moment                   from 'moment';
 import ActionsMixin             from '../mixins/ActionsMixin';
 import NotifyMixin              from '../mixins/NotifyMixin';
 import List                     from '../shared/List.react';
@@ -18,15 +19,35 @@ import {
   FlatButton, 
   FloatingActionButton,
   Tabs,
-  Tab 
+  Tab,
+  DropDownMenu
 } from 'material-ui';
 
 const PromotionDetail = React.createClass({
 
-  mixins: [ State, ActionsMixin, NotifyMixin ],
+  mixins: [ State, Navigation, ActionsMixin, NotifyMixin ],
+
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return this.props.promotion !== nextProps.promotion
+  },
 
   render() {
     let promo = this.props.promotion;
+
+    let menuItems = [
+     { payload: 'US_ONLY', text: 'US' },
+     { payload: 'CA_ONLY', text: 'CAN' },
+     { payload: 'US_CA', text: 'US & CAN' }
+    ];
+
+    menuItems.forEach((item, i) => {
+      if (item.payload === promo.promoCountryEnum) {
+        menuItems.unshift(item);
+        menuItems.splice(i+1, 1);
+      }
+    })
+
+    console.log('rendering with unsaved changes', this.props.flux._stores.promotion.hasUnsavedChanges())
 
     return (
       
@@ -99,6 +120,27 @@ const PromotionDetail = React.createClass({
             </Tab>
 
             <Tab label="Features">
+              
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Theme Colors</h5>
+                <div className="layout-hc">
+                  <Field
+                    className="flex" 
+                    name="primaryThemeColor"
+                    label="Primary"
+                    value={promo.get('primaryThemeColor')}
+                    onChange={this.updateFieldValues}
+                  />
+                  <Field
+                    className="flex" 
+                    name="secondaryThemeColor"
+                    label="Secondary"
+                    value={promo.get('secondaryThemeColor')}
+                    onChange={this.updateFieldValues}
+                  />
+                </div>
+              </div>
+
               {/* Featured Images */}  
               <div className="paper-box">
                 <h5 className="paper-box__heading">Featured Images</h5>
@@ -157,6 +199,49 @@ const PromotionDetail = React.createClass({
                   onRemove={this.removeBlogPost}
                 />
               </div>
+
+              {/* Custom Widget 1 */}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Custom Widget One</h5>
+                <div className="FieldSet">
+                  <Field 
+                    name="customWidget1Header"
+                    label="Widget Header"
+                    value={promo.get('customWidget1Header')}
+                    onChange={this.updateFieldValues}
+                  />
+                  <Field 
+                    rows={8}
+                    type="textarea"
+                    name="customWidget1"
+                    label="Widget Code"
+                    value={promo.get('customWidget1')}
+                    onChange={this.updateFieldValues}
+                  />
+                </div>
+              </div>
+
+              {/* Custom Widget 2 */}  
+              <div className="paper-box">
+                <h5 className="paper-box__heading">Custom Widget Two</h5>
+                <div className="FieldSet">
+                  <Field 
+                    name="customWidget2Header"
+                    label="Widget Header"
+                    value={promo.get('customWidget2Header')}
+                    onChange={this.updateFieldValues}
+                  />
+                  <Field 
+                    rows={8}
+                    type="textarea"
+                    name="customWidget2"
+                    label="Widget Code"
+                    value={promo.get('customWidget2')}
+                    onChange={this.updateFieldValues}
+                  />
+                </div>
+              </div>
+
             </Tab>
 
             <Tab label="Misc">
@@ -176,21 +261,34 @@ const PromotionDetail = React.createClass({
 
         <aside>
           <div className="paper">
-            <div className="box quarter bottom">
+            <div className="box quarter bottom" style={{paddingBottom:'2em'}}>
               <p>
                 <span style={{width:50, display:'inline-block'}} className="type--caption">Created:</span>&nbsp;
-                <span className="type--menu">01-01-15</span>
+                <span className="type--menu">{moment(promo.dataCreated).format("MM/DD/YY h:mm a")}</span>
               </p>
               <p>
-                <span style={{width:50, display:'inline-block'}} className="type--caption">Region:</span>&nbsp;
-                <span className="type--menu">US Only</span>
+                <span style={{width:50, display:'inline-block'}} className="type--caption">Modified:</span>&nbsp;
+                <span className="type--menu">{moment(promo.dataLastModified).format("MM/DD/YY h:mm a")}</span>
               </p>
               <p>
                 <span style={{width:50, display:'inline-block'}} className="type--caption">Status:</span>&nbsp;
-                <span className="type--menu">Live</span>
+                <span className="type--menu">Inactive</span>
               </p>
+
+              
+              <div className="layout-hc">
+                <p style={{width:50}} className="type--caption">Region:</p>
+                <DropDownMenu menuItems={menuItems} onChange={this.setRegion}/>
+              </div>
+
             </div>
-            <FlatButton className="block" label="Save" primary={true} onTouchTap={this.savePromotion}/>
+
+            <div className="layout-hc">
+              <FlatButton className="block flex" label="Save" disabled={!this.props.flux._stores.promotion.hasUnsavedChanges()} primary={true} onTouchTap={this.savePromotion}/>
+              <FlatButton className="block flex" label="Copy" secondary={true} onTouchTap={this.copyPromotion}/>
+              <FlatButton className="block flex" label="Delete" secondary={true} onTouchTap={this.deletePromotion}/>
+            </div>
+
           </div>
         </aside>
 
@@ -198,8 +296,27 @@ const PromotionDetail = React.createClass({
     );
   }, 
 
+  setRegion(e, selectedIndex, menuItem) {
+    let item = {
+      promoCountryEnum: menuItem.payload
+    }
+    this.actions('promotion').updatePromo({
+      name: 'promoCountryEnum',
+      value: menuItem.payload,
+      item: item
+    });
+  },
+
   savePromotion() {
     this.actions('promotion').save(this.props.promotion)
+  },
+
+  copyPromotion() {
+    this.transitionTo('promotions.create', {}, {copy: true})
+  },
+
+  deletePromotion() {
+    this.actions('promotion').deletePromo({id: this.props.promotion.id});
   },
 
   addBlogPost() {

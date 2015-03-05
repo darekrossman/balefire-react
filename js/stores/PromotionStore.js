@@ -11,6 +11,9 @@ const PromotionRecord = Immutable.Record({
   "startDate" : "",
   "endDate" : "",
   "primaryHeading" : "",
+  "dateCreated": "",
+  "dateLastModified": "",
+  "promoCountryEnum": "",
   "seoContent" : "",
   "pageMeta" : Immutable.Map({
     "title" : "",
@@ -30,6 +33,13 @@ const PromotionRecord = Immutable.Record({
     "emailURL" : ""
   }),
   "affiliateCategories" : "",
+  "primaryThemeColor": "",
+  "secondaryThemeColor": "",
+  "customWidget1Header":"",
+  "customWidget1":"",
+  "customWidget2Header":"",
+  "customWidget2":"",
+  "blogLinksHeader":"",
   "featuredImages": Immutable.List(),
   "primaryMerchantListings" : Immutable.List(),
   "blogLinks" : Immutable.List(),
@@ -48,6 +58,8 @@ class PromotionStore extends CrudStore {
     this.register(promotionActionIds.readLocalImage, this.onAddFeaturedImage)
     this.register(promotionActionIds.uploadImage, this.onUploadImage)
     this.register(promotionActionIds.removeFeaturedImage, this.onRemoveFeaturedImage)
+    this.register(promotionActionIds.copyPromo, this.onCopyPromo)
+    this.register(promotionActionIds.deletePromo, this.onDeletePromo)
 
     this.state = {
       promotions: Immutable.List(),
@@ -62,18 +74,36 @@ class PromotionStore extends CrudStore {
       })
     )
   }
+
+  hasUnsavedChanges() {
+    return this.state.promotion !== this.state._promotion;
+  }
   
   onGet(response) {
+    console.log(response)
     let data = Immutable.fromJS(response)
     
     if (Immutable.List.isList(data))
       this.setState({ promotions: data.map(this.transformPromotion) });
-    else
-      this.setState({ promotion: this.transformPromotion(data) });
+    else {
+      let promo = this.transformPromotion(data);
+      this.setState({
+        promotion: promo,
+        _promotion: promo
+      });
+    }
   }
 
   onCreate() {
-    this.setState({ promotion: new PromotionRecord() })
+    let promo = new PromotionRecord()
+    this.setState({
+      promotion: promo,
+      _promotion: promo
+    })
+  }
+
+  onDeletePromo(payload) {
+    console.log('promo deleted', payload.id)
   }
 
   onUpdatePromo(payload) {
@@ -123,6 +153,9 @@ class PromotionStore extends CrudStore {
 
   onSave(res) {
     console.log('Store was notified that a promo page was saved', res)
+    this.setState({
+      _promotion: this.state.promotion
+    })
   }
 
   onAddBlogPost() {
@@ -138,6 +171,14 @@ class PromotionStore extends CrudStore {
       }));
     this.setState({
       promotion: promo.set('blogLinks', blogLinks)
+    })
+  }
+
+  onCopyPromo(id) {
+    let promo = new PromotionRecord(this.state.promotion.remove('id'));
+    this.setState({
+      promotion: promo,
+      _promotion: promo
     })
   }
 

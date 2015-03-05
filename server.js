@@ -6,6 +6,10 @@ let app = koa();
 
 routes(app);
 
+app.on('error', function(error){
+  console.log('ERROR', error)
+})
+
 let port = process.env.PORT || 5000;
 
 app.listen(port);

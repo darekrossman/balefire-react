@@ -27,8 +27,10 @@ class PromotionActions extends Actions {
   }
 
   async getAll(params) {
-    let {body} = await APIUtils.get('/promos', params);
-    return body;
+    let res = await APIUtils.get('/promos', params);
+    if (res.status === 200)
+      return Promise.resolve(res.body);
+    return Promise.reject(res.error)
   }
 
   update(entity, objPath, index) {
@@ -43,6 +45,19 @@ class PromotionActions extends Actions {
 
   updatePromo(payload) {
     return payload;
+  }
+
+  copyPromo() {
+    return true;
+  }
+
+  deletePromo(params) {
+    let res = APIUtils.remove('/promos', params)
+    if (res.status === 204) {
+      return {
+        id: params.id
+      }  
+    }
   }
 
   addBlogPost(post) {

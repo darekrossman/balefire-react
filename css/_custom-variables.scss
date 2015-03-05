@@ -58,7 +58,7 @@ $flat-button-primary-hover-color: transparent;
 $flat-button-primary-text-color: $accent-1-color;
 $flat-button-primary-ripple-color: rgba($flat-button-primary-text-color, 0.2);
 $flat-button-primary-focus-ripple-color: rgba($flat-button-primary-ripple-color, 0.2);
-$flat-button-secondary-hover-color: lighten($primary-1-color, 52%);
+$flat-button-secondary-hover-color: transparent;
 $flat-button-secondary-text-color: $primary-1-color;
 $flat-button-secondary-ripple-color: rgba($flat-button-secondary-text-color, 0.2);
 $flat-button-secondary-focus-ripple-color: rgba($flat-button-secondary-ripple-color, 0.2);
